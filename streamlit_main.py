@@ -27,7 +27,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.30, rand
 
 # creating a RF classifier
 clf = RandomForestClassifier(n_estimators = 100) 
-clf_final = RandomForestClassifier(n_estimators = 100) 
 
 # Training the model on the training dataset
 # fit function is used to train the model using the training sets as parameters
@@ -40,10 +39,10 @@ f1 = metrics.f1_score(y_test, y_pred)
 # at this point we could use some hyperparameter optimization to improve performance, but we can skip that
 
 # re-train on the entire data set for the model that we will use for deployment
-clf_final.fit(X, y)
+clf.fit(X, y)
 
 # grab the feature importance vector from the trained model 
-feature_imp = pd.Series(clf_final.feature_importances_, index = X.columns).sort_values(ascending = False)
+feature_imp = pd.Series(clf.feature_importances_, index = X.columns).sort_values(ascending = False)
 
 # ------------------------------------- STREAMLIT CODE -------------------------------------
 st.markdown(''' # Titanic Survival Machine Learning Dashboard ''')
@@ -67,7 +66,7 @@ fare = st.select_slider(
      'How much did you pay for your ticket?',
      options=sorted_fares)
 
-prediction = round(clf_final.predict_proba([[cabin_class, sex_encoding[sex], age, fare]])[0][1], 4)
+prediction = round(clf.predict_proba([[cabin_class, sex_encoding[sex], age, fare]])[0][1], 4)
 
 if st.button('Run Machine Learning Model'):
      st.write(f'Probability of survival: {prediction*100}%')
