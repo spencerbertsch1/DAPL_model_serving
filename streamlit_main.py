@@ -46,7 +46,6 @@ feature_imp = pd.Series(clf.feature_importances_, index = X.columns).sort_values
 
 # ------------------------------------- STREAMLIT CODE -------------------------------------
 st.markdown(''' # Titanic Survival Machine Learning Dashboard ''')
-
 st.image('https://i.pinimg.com/736x/e6/5c/b3/e65cb36df699c19ed3f08f3f78ae94d3--titanic-messages.jpg')
 
 cabin_class = st.selectbox(
